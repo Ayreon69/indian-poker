@@ -2,6 +2,8 @@
 
 **Tout le monde voit ta carte. Sauf toi.**
 
+👉 **Jouer : https://indian-poker-usrn.onrender.com** (la première ouverture peut prendre jusqu'à une minute, le temps que le serveur gratuit se réveille)
+
 Jeu multijoueur en ligne de bluff et de déduction, à jouer entre amis depuis un navigateur, sur téléphone ou ordinateur, sans compte ni installation.
 Inspiré de l'épreuve *Indian Poker* de l'émission coréenne *The Genius* (projet de fans, non officiel).
 
