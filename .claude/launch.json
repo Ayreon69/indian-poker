@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "indian-poker",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["dist/server/index.mjs"],
+      "port": 3010
+    },
+    {
+      "name": "indian-poker-fast",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["dist/server/index.mjs"],
+      "env": { "IP_FAST": "1", "PORT": "3011" },
+      "port": 3011
+    }
+  ]
+}

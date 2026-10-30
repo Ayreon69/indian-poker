@@ -1,0 +1,11 @@
+{
+  "name": "Indian Poker",
+  "short_name": "Indian Poker",
+  "description": "Tout le monde voit ta carte. Sauf toi.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#e4432a",
+  "theme_color": "#e4432a",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
