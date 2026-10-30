@@ -102,9 +102,6 @@ export interface HandResult {
 
 export interface PackView {
   copies: number;
-  size: number;
-  /** Cartes déjà sorties lors des manches précédentes de ce paquet (jamais celles de la manche en cours). */
-  seen: number[];
   left: number;
   fresh: boolean;
 }

@@ -1343,67 +1343,6 @@ button {
   font-weight: 700;
 }
 
-/* Le compteur de cartes */
-.odds-cells {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 2px;
-}
-.odds-cell {
-  position: relative;
-  height: 34px;
-  border-radius: 3px;
-  background: var(--ink-3);
-  overflow: hidden;
-  --c: var(--paper-3);
-}
-.odds-cell.is-win {
-  --c: var(--teal);
-}
-.odds-cell.is-tie {
-  --c: var(--mustard);
-}
-.odds-cell.is-lose {
-  --c: #6c5a4a;
-}
-.odds-bar {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--c);
-  transition: height 0.35s;
-}
-.odds-v {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: #fffaf0;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
-}
-.odds-cell.is-none .odds-v {
-  color: #6c5a4a;
-  text-decoration: line-through;
-  text-shadow: none;
-}
-.odds-text {
-  margin-top: 4px;
-  font-size: 0.8rem;
-  line-height: 1.2;
-  color: var(--muted-on-ink);
-}
-.odds-text b {
-  color: var(--paper);
-  font-size: 1.05em;
-}
-.odds-ten {
-  color: #ff8a70;
-  font-weight: 600;
-}
-
 /* Actions */
 .actions {
   display: flex;
@@ -1610,9 +1549,6 @@ button {
   .seat.is-compact .seat-head {
     width: 44px;
     margin-top: -12px;
-  }
-  .odds-cell {
-    height: 26px;
   }
   .act-btn {
     min-height: 52px;

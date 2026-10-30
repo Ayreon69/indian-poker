@@ -64,7 +64,7 @@ export function RulesModal() {
         <section>
           <h3>Compter les cartes</h3>
           <p>
-            Le paquet n'est pas remélangé à chaque manche : on le garde jusqu'à ce qu'il soit épuisé. Chaque carte sortie change tes chances. L'aide au calcul (réglable dans le menu) tient le compte pour toi.
+            Le paquet contient 2 exemplaires de chaque carte jusqu'à 3 joueurs, 3 jusqu'à 5 joueurs, 4 au-delà. Il n'est remélangé que lorsqu'il est épuisé : à toi de retenir ce qui est sorti et d'en déduire ce que ta carte peut être.
           </p>
         </section>
 

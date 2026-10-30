@@ -1,9 +1,8 @@
-// La table : têtes et cartes des adversaires, pot, ta carte cachée, aide au calcul, actions et résultat.
+// La table : têtes et cartes des adversaires, pot, ta carte cachée, actions et résultat.
 import confetti from 'canvas-confetti';
 import { AnimatePresence, motion } from 'framer-motion';
-import { BookOpen, Calculator, Flag, MessageCircle, MoreHorizontal, Smile, Volume2, VolumeX } from 'lucide-react';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { cardOdds, type CardOdds } from '../../../shared/odds';
+import { BookOpen, Flag, MessageCircle, MoreHorizontal, Smile, Volume2, VolumeX } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { EMOTES, TAUNTS, TEN_PENALTY, type HandResult, type HandView, type LastAction, type MyOptions, type PlayerView, type RoomView } from '../../../shared/protocol';
 import { ChatInput, FeedList } from '../components/Feed';
 import { Head, type Mood } from '../components/Head';
@@ -98,33 +97,6 @@ function Seat({ p, h, index, turnIndex, compact, emotes, think, gain }: { p: Pla
       </div>
       {isTurn && <TurnTimer endsAt={h.turnEndsAt} think={think} />}
       {p.autopilot && <span className="seat-auto">Pilote auto</span>}
-    </div>
-  );
-}
-
-/** Le compteur de cartes : ce que ta carte peut encore être, et ce que ça vaut face à la meilleure carte visible. */
-function OddsStrip({ odds, best, showText }: { odds: CardOdds; best: number; showText: boolean }) {
-  const maxCount = Math.max(1, ...odds.counts);
-  return (
-    <div className="odds">
-      <div className="odds-cells" role="img" aria-label={`Ta carte peut encore être : ${odds.counts.map((c, v) => (c > 0 ? v : null)).filter(Boolean).join(', ')}`}>
-        {Array.from({ length: 10 }, (_, i) => i + 1).map((v) => {
-          const c = odds.counts[v];
-          return (
-            <div key={v} className={cls('odds-cell', c === 0 && 'is-none', v > best && 'is-win', v === best && 'is-tie', v < best && 'is-lose')}>
-              <span className="odds-bar" style={{ height: `${(c / maxCount) * 100}%` }} />
-              <span className="odds-v">{v}</span>
-            </div>
-          );
-        })}
-      </div>
-      {showText && (
-        <p className="odds-text">
-          <b>{Math.round(odds.win * 100)} %</b> de gagner
-          {odds.tie > 0 && <> · {Math.round(odds.tie * 100)} % d'égalité</>}
-          {odds.ten > 0 && <> · <span className="odds-ten">{Math.round(odds.ten * 100)} % d'avoir un 10</span></>}
-        </p>
-      )}
     </div>
   );
 }
@@ -351,15 +323,6 @@ export function Table({ view }: { view: RoomView }) {
   const compact = others.length > 3;
   const isHost = view.hostId === view.me;
 
-  const odds = useMemo(() => {
-    if (!h || !iPlay || h.phase !== 'betting' || me.card !== null) return null;
-    const visible = others.filter((p) => p.inHand && p.card !== null).map((p) => p.card!);
-    const live = others.filter((p) => p.inHand && !p.folded && p.card !== null).map((p) => p.card!);
-    if (!live.length) return null;
-    const best = Math.max(...live);
-    return { best, data: cardOdds(h.pack.copies, h.pack.seen, visible, best) };
-  }, [h, iPlay, me?.card, others]);
-
   if (!h) return null;
 
   const turnIndex = h.turnId === view.me ? others.length : others.findIndex((p) => p.id === h.turnId);
@@ -379,7 +342,7 @@ export function Table({ view }: { view: RoomView }) {
         <div className="table-info">
           <span className="table-hand">Manche {h.number}</span>
           <span className="table-sub">
-            Base {h.ante} · {h.pack.left} cartes dans le paquet
+            Base {h.ante} · {h.pack.copies} × chaque carte · {h.pack.left} restantes
           </span>
         </div>
         <div className="table-tools">
@@ -449,9 +412,7 @@ export function Table({ view }: { view: RoomView }) {
                   <Smile size={22} />
                 </button>
               </div>
-              {odds && prefs.help && <OddsStrip odds={odds.data} best={odds.best} showText />}
-              {!prefs.help && !r && <p className="me-tip">{me.folded ? 'Tu es couché pour cette manche.' : 'Tu vois tout le monde, sauf toi.'}</p>}
-              {me.folded && prefs.help && !r && <p className="me-tip">Tu es couché pour cette manche.</p>}
+              {!r && <p className="me-tip">{me.folded ? 'Tu es couché pour cette manche.' : 'Tu vois tout le monde, sauf toi.'}</p>}
             </div>
             <AnimatePresence>{react && <ReactionTray onClose={() => setReact(false)} />}</AnimatePresence>
           </div>
@@ -482,9 +443,6 @@ export function Table({ view }: { view: RoomView }) {
         <div className="menu-list">
           <Button icon={prefs.sound ? <Volume2 size={18} /> : <VolumeX size={18} />} onClick={() => setPrefs({ sound: !prefs.sound })}>
             Son : {prefs.sound ? 'activé' : 'coupé'}
-          </Button>
-          <Button icon={<Calculator size={18} />} onClick={() => setPrefs({ help: !prefs.help })}>
-            Aide au calcul : {prefs.help ? 'activée' : 'coupée'}
           </Button>
           <Button
             icon={<BookOpen size={18} />}

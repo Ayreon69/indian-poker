@@ -1,4 +1,4 @@
-// Paquet et probabilités : ce qu'un joueur peut déduire de sa propre carte à partir des informations publiques.
+// Paquet et probabilités, côté serveur uniquement : ce que les bots déduisent de leur carte. Les joueurs comptent de tête, rien de ceci n'est affiché.
 
 export interface CardOdds {
   /** counts[v] = nombre d'exemplaires de la valeur v (1 à 10) qui peuvent encore être ta carte. */

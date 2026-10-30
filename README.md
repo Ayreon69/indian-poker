@@ -30,7 +30,7 @@ L'émission se joue à 2, avec un paquet de 20 cartes et une pénalité versée 
 
 - Tables privées avec code à 4 lettres, lien d'invitation, partage natif et QR code
 - 2 à 8 joueurs, bots qui comptent les cartes et bluffent, partie d'entraînement en un clic
-- Aide au calcul : cartes restantes, chances de gagner et risque d'avoir un 10 (désactivable)
+- Aucune aide au calcul : ni probabilités, ni historique des cartes, on compte de tête
 - Réactions et petites phrases pour déstabiliser les autres, chat, journal de partie
 - Reprise automatique après une coupure, pilote automatique si un joueur s'absente, spectateurs
 - Temps de réflexion réglable, trois durées de partie
@@ -51,7 +51,7 @@ npm run build && npm run e2e   # partie complète avec de vrais clients connect�
 
 ## Architecture
 
-- `shared/` : contrat client/serveur, paquet et probabilités
+- `shared/` : contrat client/serveur, paquet et probabilités (utilisées uniquement par les bots)
 - `server/` : Express + Socket.IO, moteur de table (`room.ts`), bots (`bots.ts`). Le serveur fait autorité : ta carte ne quitte jamais le serveur avant la fin de la manche
 - `client/` : React + Vite + Framer Motion
 - Déploiement : un seul service Node (`npm ci && npm run build`, puis `npm start`)

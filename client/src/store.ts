@@ -13,8 +13,6 @@ export interface Profile {
 }
 export interface Prefs {
   sound: boolean;
-  /** Aide au calcul : compte les cartes et affiche tes chances. */
-  help: boolean;
 }
 export interface Emote {
   id: number;
@@ -81,7 +79,7 @@ export const useStore = create<State>((set, get) => ({
     return s && s.code && s.token ? s : null;
   })(),
   profile: load('ip.profile', defaultProfile),
-  prefs: load('ip.prefs', { sound: true, help: true }),
+  prefs: load('ip.prefs', { sound: true }),
   clockOffset: 0,
   emotes: [],
   toast: null,

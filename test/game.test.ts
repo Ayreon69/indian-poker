@@ -159,7 +159,6 @@ describe('secret de la carte', () => {
         if (p.id === viewer) expect(p.card).toBeNull();
         else expect(p.card).toBeTypeOf('number');
       }
-      expect(v.hand!.pack.seen).toHaveLength(0);
       expect(v.hand!.result).toBeNull();
     }
   });
@@ -173,14 +172,24 @@ describe('secret de la carte', () => {
     expect(v.hand!.options).toBeNull();
   });
 
-  it('révèle tout à la fin de la manche, et les cartes rejoignent le compte', () => {
+  it('révèle tout à la fin de la manche, et les cartes rejoignent le compte des bots', () => {
     const { room, ids } = table(2, 30);
     setCards(room, [4, 8]);
     room.act(ids[0], { type: 'check' });
     room.act(ids[1], { type: 'check' });
     const v = room.viewFor(ids[0]);
     expect(v.players.find((p) => p.id === ids[0])!.card).toBe(4);
-    expect(v.hand!.pack.seen).toEqual([4, 8]);
+    expect(room.seen).toEqual([4, 8]);
+  });
+
+  it('ne donne aux joueurs aucun historique des cartes sorties', () => {
+    const { room, ids } = table(2, 30);
+    setCards(room, [4, 8]);
+    room.act(ids[0], { type: 'check' });
+    room.act(ids[1], { type: 'check' });
+    const v = room.viewFor(ids[0]);
+    expect(v.hand!.pack).not.toHaveProperty('seen');
+    expect(v.log.some((l) => /\b[48]\b/.test(l.text))).toBe(false);
   });
 });
 

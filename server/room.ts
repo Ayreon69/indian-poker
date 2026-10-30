@@ -563,7 +563,8 @@ export class Room {
     const pot = this.pot(h);
     this.settle(h, { kind: 'fold', winners: [winner], gains: { [winner]: pot }, pot, bluffed, carried: 0 }, FOLD_RESULT_MS);
     this.addLog('win', `${w.name} remporte ${plural(pot, 'jeton')} : tout le monde s'est couché.`, winner);
-    if (bluffed.length) this.addLog('win', `🎭 Bluff réussi ! ${w.name} n'avait qu'un ${winnerCard} face à ${bluffed.map((id) => `${this.get(id)!.name} (${h.cards.get(id)})`).join(', ')}.`, winner);
+    // Le journal ne garde aucune valeur de carte : retenir ce qui est sorti fait partie du jeu.
+    if (bluffed.length) this.addLog('win', `🎭 Bluff réussi ! ${w.name} a fait coucher ${bluffed.map((id) => this.get(id)!.name).join(', ')} avec une meilleure carte.`, winner);
   }
 
   private showdown(h: Hand): void {
@@ -574,7 +575,7 @@ export class Room {
     if (winners.length === 1) {
       const w = this.get(winners[0])!;
       this.settle(h, { kind: 'showdown', winners, gains: { [w.id]: pot }, pot, bluffed: [], carried: 0 }, SHOWDOWN_MS);
-      this.addLog('win', `${w.name} remporte ${plural(pot, 'jeton')} avec un ${best}.`, w.id);
+      this.addLog('win', `${w.name} remporte ${plural(pot, 'jeton')}.`, w.id);
       return;
     }
     // Égalité : le pot reste sur la table, sauf si un ex æquo n'a plus de jetons (il ne serait pas éliminé par une égalité).
@@ -582,11 +583,11 @@ export class Room {
     const names = winners.map((id) => this.get(id)!.name).join(' et ');
     if (someoneBroke) {
       this.settle(h, { kind: 'split', winners, gains: this.splitPot(h, pot, winners), pot, bluffed: [], carried: 0 }, SHOWDOWN_MS);
-      this.addLog('win', `Égalité à ${best} : ${names} partagent ${plural(pot, 'jeton')}.`);
+      this.addLog('win', `Égalité : ${names} partagent ${plural(pot, 'jeton')}.`);
     } else {
       this.carry = pot;
       this.settle(h, { kind: 'carry', winners: [], gains: {}, pot, bluffed: [], carried: pot }, SHOWDOWN_MS);
-      this.addLog('win', `Égalité à ${best} entre ${names} : ${plural(pot, 'jeton')} restent sur la table pour la manche suivante.`);
+      this.addLog('win', `Égalité entre ${names} : ${plural(pot, 'jeton')} restent sur la table pour la manche suivante.`);
     }
   }
 
@@ -799,8 +800,6 @@ export class Room {
             readyIds: [...h.ready],
             pack: {
               copies: this.copies,
-              size: this.copies * 10,
-              seen: [...this.seen],
               left: this.deck.length,
               fresh: h.freshPack,
             },
