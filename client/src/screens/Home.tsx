@@ -1,6 +1,6 @@
 // Accueil : l'affiche du jeu, pseudo + personnage, créer / rejoindre une table, partie d'entraînement, règles.
 import { motion } from 'framer-motion';
-import { BookOpen, Bot, House, LogIn, Plus } from 'lucide-react';
+import { BookOpen, Bot, House, MessageSquare, LogIn, Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { AVATARS } from '../../../shared/protocol';
 import { AVATAR_LABELS, Head } from '../components/Head';
@@ -64,9 +64,14 @@ export function Home() {
 
   return (
     <div className="home">
-      <a className="all-games" href="https://akhis-games.onrender.com">
-        <House size={16} aria-hidden /> Tous les jeux
-      </a>
+      <div className="home-links">
+        <a className="all-games" href="https://akhis-games.onrender.com">
+          <House size={16} aria-hidden /> Tous les jeux
+        </a>
+        <a className="all-games" href="https://akhis-games.onrender.com/feedback.html?jeu=indian">
+          <MessageSquare size={16} aria-hidden /> Feedback
+        </a>
+      </div>
       <header className="home-hero">
         <Poster />
         <motion.div className="home-title" initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>

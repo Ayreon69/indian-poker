@@ -1672,6 +1672,13 @@ button {
 }
 
 /* Lien vers la page qui liste tous les jeux : une ligne de l'accueil, jamais par-dessus le titre */
+.home-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+  margin: max(4px, env(safe-area-inset-top)) 16px 0;
+}
 .all-games {
   display: flex;
   align-items: center;
@@ -1683,12 +1690,11 @@ button {
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
-  margin: max(4px, env(safe-area-inset-top)) 16px 0;
 }
 .all-games:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.all-games + .home-hero {
+.home-links + .home-hero {
   padding-top: 6px;
 }
